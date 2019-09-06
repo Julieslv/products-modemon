@@ -1,0 +1,14 @@
+table {
+	width: 100%;
+}
+
+table thead {
+	background: #eb008c;
+	background: linear-gradient(180deg, #eb008c 0, #c90078);
+}
+
+.mdl-data-table th {
+	color: #ffffff;
+	font-size: 1.25rem;
+	font-weight: 700;
+}
