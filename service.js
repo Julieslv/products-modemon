@@ -57,10 +57,10 @@ const getCustomerNamesForProduct = (product) => { //amend to same format
 
 	// look through the orders and get the users that ordered that product
 	const orders = require('./resources/orders.json')
-	const orderWithProduct = []
+	const orderWithProducts = []
 	orders.forEach(order => {
-		if (order.productId === productId) {
-			orderWithProduct.push(order)
+		if (order.productId === productId && !orderWithProducts.includes(order.userId)) {
+			orderWithProducts.push(order.userId)
 		}
 	})
 
@@ -71,17 +71,20 @@ const getCustomerNamesForProduct = (product) => { //amend to same format
 	// 		return (order.userId)
 	// 	}
 	// })
-	console.log('orderWithProduct', orderWithProduct)
+	console.log('orderWithProduct', orderWithProducts)
 	// [ { orderId: 5, userId: 3, productId: 444 }, { orderId: 6, userId: 1, productId: 444 }, { orderId: 7, userId: 1, productId: 444 } ]
 	// console.log('orderWithProductId', orderWithProduct[0].userId)
 
 	//return the name of the user from the orderedWithProduct array
-	const usersOrdered = users.filter(user => {
-		// console.log(orderWithProduct)
-		// console.log(user.userId)
-		user.userId === orderWithProduct.userId ? console.log(user.name) : null
 
-	})
+
+	/* 	const usersOrdered = users.filter(user => {
+			console.log(user.userId)
+			if (user.userId === orderWithProduct.userId) {
+				console.log(user.name)
+			}
+
+		}) */
 
 	/* 	const userId = orders.filter(order => {
 			return order.productId === productId ? order : null
