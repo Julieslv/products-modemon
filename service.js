@@ -57,48 +57,26 @@ const getCustomerNamesForProduct = (product) => { //amend to same format
 
 	// look through the orders and get the users that ordered that product
 	const orders = require('./resources/orders.json')
-	const orderWithProducts = []
+	const userIds = []
 	orders.forEach(order => {
-		if (order.productId === productId && !orderWithProducts.includes(order.userId)) {
-			orderWithProducts.push(order.userId)
+		if (order.productId === productId && !userIds.includes(order.userId)) {
+			userIds.push(order.userId)
 		}
 	})
 
 	const users = require('./resources/users.json')
-
-	// const orderWithProduct = orders.filter(order => {
-	// 	if (order.productId === productId) {
-	// 		return (order.userId)
-	// 	}
-	// })
-	console.log('orderWithProduct', orderWithProducts)
-	// [ { orderId: 5, userId: 3, productId: 444 }, { orderId: 6, userId: 1, productId: 444 }, { orderId: 7, userId: 1, productId: 444 } ]
-	// console.log('orderWithProductId', orderWithProduct[0].userId)
-
-	//return the name of the user from the orderedWithProduct array
-
-
-	/* 	const usersOrdered = users.filter(user => {
-			console.log(user.userId)
-			if (user.userId === orderWithProduct.userId) {
-				console.log(user.name)
+	customerNamesForProduct = []
+	users.filter(user => {
+		userIds.forEach(userId => {
+			console.log(user.userId === userId ? true : false)
+			if (user.userId === userId) {
+				customerNamesForProduct.push(user.name)
 			}
-
-		}) */
-
-	/* 	const userId = orders.filter(order => {
-			return order.productId === productId ? order : null
-		}).map(order => {
-			console.log('userd', order.userId)
-			return order
 		})
-		console.log('userId', userIds) // expected console.log to return and array of user id, but it returns the whole object with that value
-		*/
+	})
 
-	//get the userId from users
-
-
-	return ['bob', 'sue']
+	// I am sure that there is a cleaner shorter way to do this, just not sure how?
+	return customerNamesForProduct
 }
 
 const getMostPopularProduct = () => {
