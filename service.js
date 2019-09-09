@@ -29,7 +29,7 @@ const getOrderCountForProduct = (product) => {
 			return orderCountProduct
 		}
 	}
-	/* 	products.forEach(productItem => {
+	/* 	products.forEach(productItem => { //why can I not user forEach?
 			console.log(productItem)
 			if (productItem.productName === product) {
 				const productId = productItem.productId //222
@@ -38,8 +38,8 @@ const getOrderCountForProduct = (product) => {
 				for (order of orders) {
 					order.productId === productId ? orderCountProduct++ : orderCountProduct //turned into ternary
 				}
-				console.log(` orderCount ${orderCountProduct} ${typeof (orderCountProduct)}`)
-				return orderCountProduct
+				console.log(` orderCount ${orderCountProduct} ${typeof (orderCountProduct)}`) // 2
+				return orderCountProduct // test fails???
 			}
 		}); */
 	return 0
@@ -47,24 +47,53 @@ const getOrderCountForProduct = (product) => {
 }
 
 const getCustomerNamesForProduct = (product) => { //amend to same format
-	//get the userId from users
-	const users = require('./resources/users.json')
-	users.filter(user => {
-		console.log(product)
-	})
-	const products = require('./resources/products.json')
-	const productId = products.find(productItem => {
-		const productId = productItem.productName === product ? productItem.productId : 'Item not found'
-		console.log(productId)
-	})
-	productId
-	console.log()
+	//goal: return names of customers that bought item given chair
 
-	//get the userId and productId from orders
+	//from the product array get the product ID
+	const products = require('./resources/products.json')
+	let productId = products.find(productItem => productItem.productName === product)
+	productId = productId.productId
+	// console.log(`productId ${productId}`) // 444 (chair)
+
+	// look through the orders and get the users that ordered that product
 	const orders = require('./resources/orders.json')
-	orders.filter(order => {
-		console.log(order);
+	const orderWithProduct = []
+	orders.forEach(order => {
+		if (order.productId === productId) {
+			orderWithProduct.push(order)
+		}
 	})
+
+	const users = require('./resources/users.json')
+
+	// const orderWithProduct = orders.filter(order => {
+	// 	if (order.productId === productId) {
+	// 		return (order.userId)
+	// 	}
+	// })
+	console.log('orderWithProduct', orderWithProduct)
+	// [ { orderId: 5, userId: 3, productId: 444 }, { orderId: 6, userId: 1, productId: 444 }, { orderId: 7, userId: 1, productId: 444 } ]
+	// console.log('orderWithProductId', orderWithProduct[0].userId)
+
+	//return the name of the user from the orderedWithProduct array
+	const usersOrdered = users.filter(user => {
+		// console.log(orderWithProduct)
+		// console.log(user.userId)
+		user.userId === orderWithProduct.userId ? console.log(user.name) : null
+
+	})
+
+	/* 	const userId = orders.filter(order => {
+			return order.productId === productId ? order : null
+		}).map(order => {
+			console.log('userd', order.userId)
+			return order
+		})
+		console.log('userId', userIds) // expected console.log to return and array of user id, but it returns the whole object with that value
+		*/
+
+	//get the userId from users
+
 
 	return ['bob', 'sue']
 }
